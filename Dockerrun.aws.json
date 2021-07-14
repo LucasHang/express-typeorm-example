@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-        "Name": "darlanhms/express-typeorm-example:1.0.0"
+        "Name": "lucashang/express-typeorm-example:v1-prod"
     },
     "Ports": [
         {
