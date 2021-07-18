@@ -2,18 +2,18 @@ version: '3.9'
 services:
     web:
         build: .
-        ports:
-            - '3000:3000'
         environment:
             PORT: '3000'
             DB_HOST: typeorm-example-db
             DB_PORT: 5432
+            TZ: America/Sao_Paulo
         links:
             - typeorm-example-db
         depends_on:
             - typeorm-example-db
         networks:
             - typeorm-postgres
+            - nginx-network
     typeorm-example-db:
         container_name: typeorm-example-db
         build: ./src/database
@@ -27,8 +27,18 @@ services:
             - typeorm-postgres-data:/data
         networks:
             - typeorm-postgres
+    typeorm-example-nginx:
+        image: nginx_express-typeorm-example
+        ports: 
+            - 80:80
+        depends_on: 
+            - web
+        networks: 
+            - nginx-network
 volumes:
     typeorm-postgres-data:
 networks:
     typeorm-postgres:
+        driver: bridge
+    nginx-network:
         driver: bridge
